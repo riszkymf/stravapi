@@ -1,0 +1,37 @@
+version: '3'
+services:
+  api-42mini:
+    image: "mfriszky/42mini:be-v1.0"
+    ports:
+    - "5050:5050"
+    environment:
+    -  MONGO_HOST=mongo:27017
+    -  MONGO_USER=42root
+    -  MONGO_PASS=a101de0df6a4e3e4
+    -  MONGO_PROTOCOL=mongodb
+    -  'MONGO_OPTS=authSource=admin'
+    -  MONGO_DB_NAME=this_app
+    -  STRAVA_HOST=https://www.strava.com/api/v3
+    -  STRAVA_TOKEN=2b3d408e0239756f143c61366db7ca6ee5b270b0
+    -  STRAVA_REFRESH_TOKEN=29f742bc1948697dae20a2ef5642b1676a01a3f7
+    -  STRAVA_CLIENT_SECRET=cf4d2a39ac9a7a69fd63b1146b5db5c0ba5cc419
+    -  STRAVA_CLIENT_ID=100387
+    -  REDIS_URL=redis://0.0.0.0:6379?db=2
+    -  REDIS_PASSWORD=eYVX7EwVmmxKPCDmwMtyKVge8oLd2t81
+    -  OAUTH_REDIRECT=http://0.0.0.0:5173/auth
+    -  JWT_SECRET=IwkZYPvTcXDByofTFQlM
+  mongo:
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: 42root
+      MONGO_INITDB_ROOT_PASSWORD: a101de0df6a4e3e4
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: 42root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: a101de0df6a4e3e4
+      ME_CONFIG_MONGODB_URL: mongodb://42root:a101de0df6a4e3e4@mongo:27017/
